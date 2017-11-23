@@ -38,23 +38,55 @@ router.get("/biografies/new", middleware.isLogin ,function(req, res){
 // CREATE
 
 router.post("/biografies", function(req, res){
-   Bio.create(req.body.bio, function(error, biografyFound){
-       if(error){
-           console.log(error);
-       }else {
-           biografyFound.users.id = req.user._id;
-           biografyFound.users.username = req.user.username ;
-           biografyFound.save(function(error, saveUserInfo){
-               if(error){
-                   console.log(error);
-               }else {
-                   console.log(saveUserInfo);
-               }
-           });
-           console.log(biografyFound);
-           res.redirect("/biografies");
-       }
-   }) ;
+   
+   var name = req.body.name;
+   var picture = req.body.picture;
+   var year = req.body.year;
+   var country = req.body.country;
+   var description = req.body.description ;
+   
+   var newBio = {
+       name: name,
+       picture : picture,
+       year : year,
+       country : country,
+       description : description
+   }
+   
+   req.checkBody("name", "name is required").notEmpty();
+   req.checkBody("picture", "picture is required").notEmpty();
+   req.checkBody("description", "description is required").notEmpty();
+   
+   var errors = req.validationErrors();
+   
+   if(errors){
+       console.log(errors);
+       
+       res.render("resfullRoutes/newForm", {
+           errores : errors
+       });
+   }else {
+    
+    
+            Bio.create(newBio, function(error, biografyFound){
+                   if(error){
+                       console.log(error);
+                   }else {
+                       biografyFound.users.id = req.user._id;
+                       biografyFound.users.username = req.user.username ;
+                       biografyFound.save(function(error, saveUserInfo){
+                           if(error){
+                               console.log(error);
+                           }else {
+                               console.log(saveUserInfo);
+                           }
+                       });
+                       console.log(biografyFound);
+                       req.flash("success", "Biography Succesfully Added");
+                       res.redirect("/biografies");
+                   }
+            }) ;
+   }
 });
 
 // SHOW Each detail 

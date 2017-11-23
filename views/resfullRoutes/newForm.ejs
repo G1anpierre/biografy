@@ -11,24 +11,26 @@
     <form action="/biografies" method="POST">
       <div class="form-group">
         <label for="name1">Name</label>
-        <input type="text" class="form-control" name="bio[name]" id="name1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <input type="text" class="form-control" name="name" id="name1" aria-describedby="emailHelp" placeholder="Enter Persons Biograph Name">
+        <small id="emailHelp" class="form-text text-muted"> * This Field is Require </small>
       </div>
       <div class="form-group">
         <label for="picture1">Picture</label>
-        <input type="text" class="form-control" name="bio[picture]" id="picture1" placeholder="Picture">
+        <input type="text" class="form-control" name="picture" id="picture1" placeholder="Use the URL address or the picture">
+        <small  class="form-text text-muted"> * This Field is Require </small>
       </div>
       <div class="form-group">
         <label for="year1">Year</label>
-        <input type="number" class="form-control" name="bio[year]" id="year1" placeholder="Year of bird">
+        <input type="number" class="form-control" name="year" id="year1" placeholder="Year of bird">
       </div>
       <div class="form-group">
         <label for="country1">Country</label>
-        <input type="text" class="form-control" name="bio[country]" id="country1" placeholder="Country">
+        <input type="text" class="form-control" name="country" id="country1" placeholder="Country">
       </div>
       <div class="form-group">
         <label for="description1">Description</label>
-        <textarea rows="3" type="text" class="form-control" name="bio[description]" id="description1" placeholder="Description"></textarea>
+        <textarea rows="3" type="text" class="form-control" name="description" id="description1" placeholder="Description"></textarea>
+        <small  class="form-text text-muted"> * This Field is Require </small>
       </div>
       <button type="submit" class="btn btn-primary btn-block">Submit</button>
     </form>

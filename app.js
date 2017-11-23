@@ -26,6 +26,8 @@ console.log(process.env.DATABASEURL);
 //mongoose.connect('mongodb://localhost/myapp_data');
 
 mongoose.connect(process.env.DATABASEURL);
+
+//This Step from down here was Add it as Enviroment Variable DATABASEURL in Heroku :)
 //mongoose.connect('mongodb://gia:italia@ds141328.mlab.com:41328/biography');
 
 app.use(express.static('public'));
