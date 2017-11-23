@@ -1,0 +1,27 @@
+
+<% include ../partials/header %>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-3">Biography, Greates Humans in the World</h1>
+    <p class="lead">This is a list of the most influential people of all of human history. This means that the individuals on this list have had a significant effect on how regular people live their lives today and have had a large impact on how modern society works..</p>
+  </div>
+</div>
+
+<div class="container">
+    <div class="row" style="display:flex; flex-wrap: wrap">
+          <% bioFound.forEach(function(element){ %> 
+            <div class="col-md-4">
+              <div class="card thumbnail">
+                <img class="card-img-top img-thumbnail" src="<%= element.picture %>" alt="Card image cap">
+                <div class="card-body">
+                  <a href="/biografies/<%= element._id %>"><h4 class="card-title"><%= element.name %></a> year of bird: <%= element.year %></h4>
+                  <p class="card-text"><%= element.country %> - <%= element.description %></p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+    </div>
+</div>
+<% include ../partials/footer %>

@@ -1,0 +1,22 @@
+<% include ../partials/header %>
+
+<div class="card text-center">
+    <div class="card-body">
+        <h4 class="card-title">Edit Single Comment</h4>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    </div>
+</div>
+<div class="container">
+    <form action="/biografies/<%= id %>/comments/<%= singleCommentFound._id %>?_method=PUT" method="POST">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Example textarea</label>
+            <input class="form-control" id="exampleFormControlTextarea1" name="update[comment]" value="<%= singleCommentFound.comment %>" rows="3"></input>  
+             <button class="btn btn-success">Update</button>
+        </div>
+    </form>
+</div>
+
+
+
+
+<%include ../partials/footer %>

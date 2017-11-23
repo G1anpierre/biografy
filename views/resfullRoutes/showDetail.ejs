@@ -1,0 +1,47 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="thumbnail">
+        <div class="thumbnail">
+            <span>Created by: <%= biographFound.users.username %> </span>
+            <img src="<%= biographFound.picture %>"></img>
+        </div>
+        <div>
+            <%= biographFound.description %> 
+        </div>
+        
+        <div>
+            <a href="/biografies/<%= biographFound._id %>/edit" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Edit Biografy</a>
+            <form class="delete" action="/biografies/<%= biographFound._id %>?_method=DELETE" method="POST">
+                <button class="btn btn-danger" >Delete Biografy</button>
+            </form>
+            
+            <a role="button" class="btn btn-primary btn-lg active" href="/biografies/<%=biographFound._id%>/comments/newComment" class="btn btn-info">Add a Comment</a>
+        </div>
+    </div>
+        <div>
+            <ul class="list-unstyled">
+             <% biographFound.comments.forEach(function(element){ %>   
+                <li class="media">  
+                  <div class="media-body">
+                    <h5 class="mt-0"><%= element.author.username %></h5>
+                    <p><%=element.comment%></p> 
+                    
+                    <% if(logeado && element.author.id.equals(logeado._id)){ %>
+                    <a href="/biografies/<%= biographFound._id %>/comments/<%= element._id %>/commentedit" class="btn btn-primary btn-sm" role="button" aria-disabled="true">Edit single Comment</a>
+                    <form class="delete" action="/biografies/<%= biographFound._id %>/comments/<%= element._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-outline-primary">Delete Single Comment</button>
+                    </form>
+                    <% } %>
+                  </div>
+                </li>
+             <% }); %>
+            </ul>
+        </div>
+</div>
+
+
+
+
+
+<%include ../partials/footer %>

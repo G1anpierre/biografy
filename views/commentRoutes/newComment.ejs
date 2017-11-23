@@ -1,0 +1,18 @@
+
+<% include ../partials/header %>
+
+<div class="container">
+    <h4> Add a Comment </h4>
+    <form id="formCenter" action="/biografies/<%= BiographFound._id %>/comments" method="POST">
+        
+      <div class="form-group">
+        <label> Add a Comment</label>
+        <input type="text" class="form-control"  name="comments[comment]" placeholder="Add a Comment"></input>
+      </div>    
+      
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    
+</div>
+
+<% include ../partials/footer %>
