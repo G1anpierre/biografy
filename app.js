@@ -21,8 +21,13 @@ var authenticGroup = require("./routes/authenticGroup");
 
 // APPLICATION CONFIG
 
+console.log(process.env.DATABASEURL);
+
 //mongoose.connect('mongodb://localhost/myapp_data');
-mongoose.connect('mongodb://gia:italia@ds141328.mlab.com:41328/biography');
+
+mongoose.connect(process.env.DATABASEURL);
+//mongoose.connect('mongodb://gia:italia@ds141328.mlab.com:41328/biography');
+
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
 app.use(expressValidator());

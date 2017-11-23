@@ -103,6 +103,8 @@ router.delete("/biografies/:id",middleware.AuthenticOwnership ,function(req, res
          console.log(error);
      }  else {
          console.log(biographFoundAndRemove);
+         console.log("Deleted Succesfully!");
+         req.flash("success", "You have succesfully Delete a Biography");
          res.redirect("/biografies");
      }
    });
