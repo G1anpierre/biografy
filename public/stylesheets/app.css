@@ -2,6 +2,10 @@
     display: inline;
 }
 
+.textcenter {
+    text-align: center;
+}
+
 #formCenter {
     width: 30%;
 }
@@ -11,5 +15,10 @@
 }
 
 #foot {
+    margin-top: 200px;
     text-align: center;
+}
+
+form {
+    margin-top: 75px;
 }

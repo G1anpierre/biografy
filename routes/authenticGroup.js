@@ -31,7 +31,7 @@ router.post("/register", function(req, res){
         console.log(errors);
     
         res.render("authentRoutes/registration", {
-            errors: errors
+            errores: errors
         });
        
     } else {

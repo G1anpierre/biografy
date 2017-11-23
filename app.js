@@ -93,6 +93,7 @@ app.use(function(req, res, next){
     res.locals.logeado = req.user;
     res.locals.errors = req.flash("error");
     res.locals.successes = req.flash("success");
+    res.locals.errores = req.flash("errores");
     next();
 });
 
