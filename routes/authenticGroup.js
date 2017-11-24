@@ -22,10 +22,13 @@ router.post("/register", function(req, res){
     var email = req.body.email;
     
     req.checkBody("username", "username is required").notEmpty();
+    req.checkBody("username", "username allready exists").exists();
     req.checkBody("password", "Password is required").notEmpty();
     req.checkBody("password2", "Passwords do not match").equals(req.body.password);
     
     var errors = req.validationErrors();
+    
+
     
     if(errors){
         console.log(errors);

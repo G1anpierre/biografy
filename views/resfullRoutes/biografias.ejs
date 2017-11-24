@@ -16,8 +16,8 @@
                 <img class="card-img-top img-thumbnail" src="<%= element.picture %>" alt="Card image cap">
                 <div class="card-body">
                   <a href="/biografies/<%= element._id %>"><h4 class="card-title"><%= element.name %></a> year of bird: <%= element.year %></h4>
-                  <p class="card-text"><%= element.country %> - <%= element.description %></p>
-                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                  <p class="card-text"><%= element.country %> - <%= element.description.substring(0, 300) %>...</p>
+                  <p class="card-text"><small class="text-muted"><%= element.created.toDateString() %></small></p>
                 </div>
               </div>
             </div>
