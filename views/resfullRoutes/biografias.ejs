@@ -12,7 +12,7 @@
     <div class="row" style="display:flex; flex-wrap: wrap">
           <% bioFound.forEach(function(element){ %> 
             <div class="col-md-4">
-              <div class="card thumbnail">
+              <div class="card thumbnail" >
                 <img class="card-img-top img-thumbnail" src="<%= element.picture %>" alt="Card image cap">
                 <div class="card-body">
                   <a href="/biografies/<%= element._id %>"><h4 class="card-title"><%= element.name %></a> year of bird: <%= element.year %></h4>

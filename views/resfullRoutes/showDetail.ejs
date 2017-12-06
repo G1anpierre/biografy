@@ -1,45 +1,89 @@
 <% include ../partials/header %>
 
 <div class="container">
-    <div class="thumbnail">
-        <div class="thumbnail">
-            <span>Created by: <%= biographFound.users.username %> </span>
-            <img src="<%= biographFound.picture %>"></img>
-        </div>
-        <div>
-            <%= biographFound.description %> 
-        </div>
-        
-        <div>
-            <a href="/biografies/<%= biographFound._id %>/edit" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Edit Biografy</a>
-            <form class="delete" action="/biografies/<%= biographFound._id %>?_method=DELETE" method="POST">
-                <button class="btn btn-danger" >Delete Biografy</button>
-            </form>
-            
-            <a role="button" class="btn btn-primary btn-lg active" href="/biografies/<%=biographFound._id%>/comments/newComment" class="btn btn-info">Add a Comment</a>
-        </div>
-    </div>
-        <div>
-            <ul class="list-unstyled">
-             <% biographFound.comments.forEach(function(element){ %>   
-                <li class="media">  
-                  <div class="media-body">
-                    <h5 class="mt-0"><%= element.author.username %></h5>
-                    <p><%=element.comment%></p> 
-                    
-                    <% if(logeado && element.author.id.equals(logeado._id)){ %>
-                    <a href="/biografies/<%= biographFound._id %>/comments/<%= element._id %>/commentedit" class="btn btn-primary btn-sm" role="button" aria-disabled="true">Edit single Comment</a>
-                    <form class="delete" action="/biografies/<%= biographFound._id %>/comments/<%= element._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-outline-primary">Delete Single Comment</button>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="thumbnail">
+                <div class="thumbnail">
+                    <span>Created by: <%= biographFound.users.username %> </span>
+                    <img src="<%= biographFound.picture %>"></img>
+                </div>
+                <div>
+                    <%= biographFound.description %> 
+                </div>
+                
+                <div>
+                    <a href="/biografies/<%= biographFound._id %>/edit" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Edit Biografy</a>
+                    <form class="delete" action="/biografies/<%= biographFound._id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger" >Delete Biografy</button>
                     </form>
-                    <% } %>
-                  </div>
-                </li>
-             <% }); %>
-            </ul>
+                    
+                    <a role="button" class="btn btn-primary btn-lg active" href="/biografies/<%=biographFound._id%>/comments/newComment" class="btn btn-info">Add a Comment</a>
+                </div>
+            </div>
+            <div>
+                <ul class="list-unstyled">
+                 <% biographFound.comments.forEach(function(element){ %>   
+                    <li class="media">  
+                      <div class="media-body">
+                        <h5 class="mt-0"><%= element.author.username %></h5>
+                        <p><%=element.comment%></p> 
+                        
+                        <% if(logeado && element.author.id.equals(logeado._id)){ %>
+                        <a href="/biografies/<%= biographFound._id %>/comments/<%= element._id %>/commentedit" class="btn btn-primary btn-sm" role="button" aria-disabled="true">Edit single Comment</a>
+                        <form class="delete" action="/biografies/<%= biographFound._id %>/comments/<%= element._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-outline-primary">Delete Single Comment</button>
+                        </form>
+                        <% } %>
+                      </div>
+                    </li>
+                 <% }); %>
+                </ul>
+            </div>
         </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+              <p class="lead">Biografy</p>
+              <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+              </div>
+              <div id="map"></div>
+            </div>
+        </div>
+    </div>    
 </div>
 
+
+<script>
+  function initMap() {
+    var lat = <%= biographFound.lat %>;
+    var lng = <%= biographFound.lng %>;
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= biographFound.name %><br />
+      <%= biographFound.location %></strong>
+      <p><%= biographFound.description %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_y-wmRc6RW9IEYjtMFgn7pdbZ_40pdnQ&callback=initMap"></script>
 
 
 

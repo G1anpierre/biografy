@@ -1,9 +1,8 @@
 var express = require("express");
 var router = express.Router();
-
 var Bio = require("../models/biografies");
-
 var middleware = require("../middleware/index.js");
+var geocoder = require("geocoder");
 
 //////////////////////////
 // RESFULL ROUTES
@@ -45,48 +44,62 @@ router.post("/biografies", function(req, res){
    var country = req.body.country;
    var description = req.body.description ;
    
+   geocoder.geocode(req.body.location, function (err, data) {
+    if(err){
+        console.log('there is an error');
+        console.log('err');
+    }
+    var lat = data.results[0].geometry.location.lat;
+    var lng = data.results[0].geometry.location.lng;
+    var location = data.results[0].formatted_address;
+    console.log('********');    
+   console.log(location);
    var newBio = {
        name: name,
        picture : picture,
        year : year,
        country : country,
-       description : description
+       description : description,
+       location : location,
+       lat: lat,
+       lng: lng
    }
-   
+   console.log('###########');
+   console.log(newBio);
    req.checkBody("name", "name is required").notEmpty();
    req.checkBody("picture", "picture is required").notEmpty();
    req.checkBody("description", "description is required").notEmpty();
    
    var errors = req.validationErrors();
    
-   if(errors){
-       console.log(errors);
-       
-       res.render("resfullRoutes/newForm", {
-           errores : errors
-       });
-   }else {
+       if(errors){
+           console.log(errors);
+           
+           res.render("resfullRoutes/newForm", {
+               errores : errors
+           });
+       }else {
     
-    
-            Bio.create(newBio, function(error, biografyFound){
-                   if(error){
-                       console.log(error);
-                   }else {
-                       biografyFound.users.id = req.user._id;
-                       biografyFound.users.username = req.user.username ;
-                       biografyFound.save(function(error, saveUserInfo){
-                           if(error){
-                               console.log(error);
-                           }else {
-                               console.log(saveUserInfo);
-                           }
-                       });
-                       console.log(biografyFound);
-                       req.flash("success", "Biography Succesfully Added");
-                       res.redirect("/biografies");
-                   }
-            }) ;
-   }
+                Bio.create(newBio, function(error, biografyFound){
+                       if(error){
+                           console.log(error);
+                       }else {
+                           biografyFound.users.id = req.user._id;
+                           biografyFound.users.username = req.user.username ;
+                           biografyFound.save(function(error, saveUserInfo){
+                               if(error){
+                                   console.log(error);
+                               }else {
+                                   console.log(saveUserInfo);
+                               }
+                           });
+                           console.log(biografyFound);
+                           req.flash("success", "Biography Succesfully Added");
+                           res.redirect("/biografies");
+                       }
+                }) ;
+       }
+   });
 });
 
 // SHOW Each detail 
@@ -119,13 +132,19 @@ router.get("/biografies/:id/edit", middleware.AuthenticOwnership, function(req, 
 //UPDATE find the update
 
 router.put("/biografies/:id",function(req, res){
-    Bio.findByIdAndUpdate( req.params.id, req.body.bio, function(error, biographFoundAndUpdate){
-       if(error){
-           console.log(error);
-       } else {
-           console.log(biographFoundAndUpdate);
-           res.redirect("/biografies/" + req.params.id);
-       }
+    geocoder.geocode(req.body.location, function (err, data) {
+    var lat = data.results[0].geometry.location.lat;
+    var lng = data.results[0].geometry.location.lng;
+    var location = data.results[0].formatted_address;
+    var newData = {name: req.body.name, image: req.body.picture, year: req.body.year , country: req.body.country , description: req.body.description, location: location, lat: lat, lng: lng};
+        Bio.findByIdAndUpdate( req.params.id, {$set: newData}, function(error, biographFoundAndUpdate){
+           if(error){
+               console.log(error);
+           } else {
+               console.log(biographFoundAndUpdate);
+               res.redirect("/biografies/" + req.params.id);
+           }
+        });
     });
 });
 

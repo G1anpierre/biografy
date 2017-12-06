@@ -7,6 +7,9 @@ var bioSchema = new mongoose.Schema({
    year: Number,
    country: String, 
    description: String,
+   location: String,
+   lat: Number,
+   lng: Number,
    created: {type: Date, default: Date.now},
    comments: [
          {
