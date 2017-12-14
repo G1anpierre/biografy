@@ -47,6 +47,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// this is use whe the users log in, authenticate
+
 passport.use(new LocalStrategy(
         function(username, password, done){
         
