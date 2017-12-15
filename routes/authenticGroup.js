@@ -21,6 +21,7 @@ router.post("/register", function(req, res){
     var password2 = req.body.password2;
     var email = req.body.email;
     
+    
     req.checkBody("username", "username is required").notEmpty();
     req.checkBody("username", "username allready exists").exists();
     req.checkBody("password", "Password is required").notEmpty();
@@ -41,8 +42,11 @@ router.post("/register", function(req, res){
             var newuser = new User({
                 username: username,
                 password: password,
-                email : email 
+                email : email, 
             });
+            if(req.body.adminCode === "secretCode123"){
+                newuser.isAdmin = true;
+            }
             
             bcrypt.genSalt(10, function(err, salt) {
                     bcrypt.hash(newuser.password, salt, function(err, hash) {

@@ -109,6 +109,6 @@ app.use(authenticGroup);
 
 
 
-app.listen( process.env.PORT, process.env.IP, function(){
-   console.log("Application has Started!") ;
+app.listen( 3000, function(){
+   console.log("Application has Started! on port 3000") ;
 });
